@@ -1,3 +1,32 @@
 key id: TAuL4H4daAipzrBPjLKVTnoZqH9Mp9Bx
 
 key secret: mV1JGD4fbYNTE1GiWY4AaTQm1UNEFH68NkaybWqQ_Y2zH94NOgyY65D0YWm3RO6C
+
+
+ADF Access:
+client id: eac008ff-501f-46cd-bb9f-b395754d1f2c
+client secret: kCV8Q~kP3zxFYFDK39Rb3K5DHqkOYwxk1hbkYaoP
+tenant id: 2ac9f033-3b40-4c0a-a92b-fe1eeb6cb62e
+subscription id: c5974c8b-6361-4dcd-b835-f9434e16ffb9
+
+secret id: d036e94a-8f9b-4605-8e30-94d345a45250
+
+
+
+ADF Access:
+client id: c3cdddbc-b109-4034-9611-58139a528ccc
+client secret: 6IB8Q~g1I6dZ47D5q6sv4nGavAtS6IHIxWaIJdf3
+
+tenant id: 046a9e7b-6614-4a1a-8aa5-d03a920c8505
+subscription id: not sure: 48304437-d368-4e74-9060-cfaaa6c675d5
+89ac8c79-4f58-42ba-8a11-4edeec0ad4ab
+
+
+secret id: 48304437-d368-4e74-9060-cfaaa6c675d5
+
+
+dbt accountid: 185842
+dbt api token: e2eaaf93749113cddfd374eb0fa3ad5e240f920b
+
+
+--dbt run --select --vars '{ "refresh_type" : "daily"}'
