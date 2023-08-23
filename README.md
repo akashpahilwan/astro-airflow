@@ -1,8 +1,14 @@
 Overview
 ========
 
-Welcome to Astronomer! This project was generated after you ran 'astro dev init' using the Astronomer CLI. This readme describes the contents of the project, as well as how to run Apache Airflow on your local machine.
+Welcome to the Airflow Project repo! <br>
+I will be creating different dags for different Project Architure and push here it here for reference. <br
+<br>
+This repo can also be cloned and using below command: <br>
 
+```
+git clone https://github.com/akashpahilwan/astro-airflow.git 
+```
 Project Contents
 ================
 
@@ -11,6 +17,11 @@ Your Astro project contains the following files and folders:
 - dags: This folder contains the Python files for your Airflow DAGs. By default, this directory includes two example DAGs:
     - `example_dag_basic`: This DAG shows a simple ETL data pipeline example with three TaskFlow API tasks that run daily.
     - `example_dag_advanced`: This advanced DAG showcases a variety of Airflow features like branching, Jinja templates, task groups and several Airflow operators.
+<br>
+    Along with these there will be other dags created for different project Architectures and seperate readme will be present for each dag in seperate folder.
+    - `process_employee`: This is a dag created as first Project with simple end to end ETL pipeline. All the details related to this dag can be found  [here](docs/process_employee/)
+
+
 - Dockerfile: This file contains a versioned Astro Runtime Docker image that provides a differentiated Airflow experience. If you want to execute other commands or overrides at runtime, specify them here.
 - include: This folder contains any additional files that you want to include as part of your project. It is empty by default.
 - packages.txt: Install OS-level packages needed for your project by adding them to this file. It is empty by default.
