@@ -42,7 +42,7 @@ from azure.mgmt.datafactory.models import *
 
 #dbt connection id and job id : needs to be parameterized
 DBT_CLOUD_CONN_ID = "dbt_conn"
-JOB_ID = "399392"
+JOB_ID = "403919"
 run_date='2023-06-24'
 run_pipeline='pipeline1'
 run_dataset='employeedata'

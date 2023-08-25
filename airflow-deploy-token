@@ -25,8 +25,11 @@ subscription id: not sure: 48304437-d368-4e74-9060-cfaaa6c675d5
 secret id: 48304437-d368-4e74-9060-cfaaa6c675d5
 
 
-dbt accountid: 185842
-dbt api token: e2eaaf93749113cddfd374eb0fa3ad5e240f920b
+dbt accountid: 190219
+dbt api token: 3e7d21a8c2c57b4b8873bbe44dfda2bb388037e9
+
+dbt account id for demo: 192060
+dbt api token: a388877205ec07d1a1b9cb74ddbb99772c06800d
 
 
 --dbt run --select --vars '{ "refresh_type" : "daily"}'
