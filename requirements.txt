@@ -8,3 +8,4 @@ azure-mgmt-resource
 azure-mgmt-datafactory
 azure-identity
 secure-smtplib
+apache-airflow-providers-slack

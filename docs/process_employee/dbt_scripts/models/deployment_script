@@ -1,0 +1,1 @@
+dbt build --select +dim_employees --vars '{ "refresh_type" : "daily"}'

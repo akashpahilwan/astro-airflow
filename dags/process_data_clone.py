@@ -38,8 +38,8 @@ from azure.identity import ClientSecretCredential
 from azure.mgmt.resource import ResourceManagementClient
 from azure.mgmt.datafactory import DataFactoryManagementClient
 from azure.mgmt.datafactory.models import *
-from airflow.configuration import conf
 
+from airflow.configuration import conf
 
 #dbt connection id and job id : needs to be parameterized
 DBT_CLOUD_CONN_ID = "dbt_conn"
@@ -93,7 +93,7 @@ If this is parameterized, same can be used for other dimention tables consdering
 Pleae note we are not using taskflow api syntax for creating dag as we are also learning airflow. We are using native traditional airflow syntax.  
 
 """
-with DAG ('process_data',start_date=datetime(2023, 1, 1),
+with DAG ('process_data_cloned',start_date=datetime(2023, 1, 1),
     max_active_runs=1,
     schedule="@daily",
     # Default settings applied to all tasks within the DAG; can be overwritten at the task level.
@@ -133,12 +133,12 @@ with DAG ('process_data',start_date=datetime(2023, 1, 1),
         print("xcom_value: ",xcom_value)
         if xcom_value['success']=='0':
             date=str(datetime.now().date())
-            subject="The Pipeline: P1001 run failed as of date: "+date +" for Load date: "+run_date
+            subject="The Pipeline: P1001 run failed as of date: "+date
             text = "The error received in the Pipeline run is as follows: "
             text += xcom_value['error_message']
         else:
             date=str(datetime.now().date())
-            subject="The Pipeline: P1001 run was successful as of date: "+date +" for Load date: "+run_date
+            subject="The Pipeline: P1001 run was successful as of date: "+date
             text = "No error received"
 
         s = smtplib.SMTP(smtp_server, int(smtp_port))
@@ -224,6 +224,8 @@ with DAG ('process_data',start_date=datetime(2023, 1, 1),
     We will go through that location at scheduled time and check if atleast one file exist in the path.
     """
     def func_check_folder_and_files(connstr,container,date):
+        a='11'
+        b='11'+111
         blob_service_client=BlobServiceClient.from_connection_string(connstr)
         container_client = blob_service_client.get_container_client(container)
         myblob_date_files = container_client.list_blobs(name_starts_with="employeedata/"+date+"/")

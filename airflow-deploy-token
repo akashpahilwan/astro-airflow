@@ -1,6 +1,6 @@
-key id: Oo19pdWsmDfjHHzy1xttFn33GnTUfQoc
+key id: Ry2g9DBZblcTlynVauTgcecdVKT2R544
 
-key secret: XDdxTehzXo5TbtCI3LVU8yhhZhl6do2NTFechcIXVOyGtCoReOvSxmevFdnmwyJD
+key secret: R7jPBM7Z-QpkktTLlUpqzG4-YxjHJi5Tsdxhz17bGQGueuxWBUHxW9UIgoIGBYXM
 
 
 ADF Access:
@@ -33,6 +33,8 @@ dbt api token: a388877205ec07d1a1b9cb74ddbb99772c06800d
 
 
 --dbt run --select --vars '{ "refresh_type" : "daily"}'
+
+https://hooks.slack.com/services/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
 
 
 
