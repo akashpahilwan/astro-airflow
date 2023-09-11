@@ -4,3 +4,4 @@
 __pycache__/
 astro
 astro-deploy-token
+airflow-deploy-token
