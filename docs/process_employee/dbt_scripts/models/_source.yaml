@@ -1,0 +1,44 @@
+version: 2
+
+sources:
+  - name: landing_tables
+    description: A clone of a Postgres application database.
+    database: airflow
+    schema: landing
+    tables:
+      - name: VIEW_STG_EMPLOYEE_FILTERED_DAILY
+        description: Daily Filtered view
+        columns:
+          - name: empid
+            description: Primary key for Employees.
+            tests:
+              - unique
+              - not_null
+          - name: maritaldesc
+            description: Maritial Description of Employees
+            tests:
+              - accepted_values:
+                  values:
+                    - Single
+                    - Married
+                    - Divorced
+                    - Separated
+                    - Widowed
+      - name: VIEW_STG_EMPLOYEE
+        description: All Employee records 
+        columns:
+          - name: empid
+            description: Primary key for Employees.
+            tests:
+              - unique
+              - not_null
+          - name: maritaldesc
+            description: Maritial Description of Employees
+            tests:
+              - accepted_values:
+                  values:
+                    - Single
+                    - Married
+                    - Divorced
+                    - Separated
+                    - Widowed
