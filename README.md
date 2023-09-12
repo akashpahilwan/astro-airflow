@@ -18,8 +18,8 @@ Your Astro project contains the following files and folders:
     - `example_dag_basic`: This DAG shows a simple ETL data pipeline example with three TaskFlow API tasks that run daily.
     - `example_dag_advanced`: This advanced DAG showcases a variety of Airflow features like branching, Jinja templates, task groups and several Airflow operators.
 <br>
-    Along with these there will be other dags created for different project Architectures and seperate readme will be present for each dag in seperate folder.
-    - `process_employee`: This is a dag created as first Project with simple end to end ETL pipeline. All the details related to this dag can be found  [here](docs/process_employee/)
+    Along with these there will be other dags created for different project Architectures and seperate readme will be present for each dag in seperate folder. <br>
+    - `process_employee` : This is a dag created as first Project with simple end to end ETL pipeline. All the details related to this dag can be found  [here](docs/process_employee/) <br>
 
 
 - Dockerfile: This file contains a versioned Astro Runtime Docker image that provides a differentiated Airflow experience. If you want to execute other commands or overrides at runtime, specify them here.
@@ -54,7 +54,3 @@ Deploy Your Project to Astronomer
 
 If you have an Astronomer account, pushing code to a Deployment on Astronomer is simple. For deploying instructions, refer to Astronomer documentation: https://docs.astronomer.io/cloud/deploy-code/
 
-Contact
-=======
-
-The Astronomer CLI is maintained with love by the Astronomer team. To report a bug or suggest a change, reach out to our support.
