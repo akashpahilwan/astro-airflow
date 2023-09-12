@@ -51,7 +51,9 @@ Folder structure: <container_name> / <folder_name> / <date_format> / *.csv <br> 
 
 ![ADLS folder structure](images/01_adls.png)
 <br>
+<br>
 Created an ADLS account with name: <i>myorgdatastorage</i> and both the containers are present in the same container.
+<br>
 <br>
 ![ADLS folder structure](images/02_adls.png)
 <br>
@@ -62,14 +64,16 @@ Please note: We will not be running the ADF pipeline directly in Azure, first we
 <br>
 For this we are using a seperate activity in airflow with Python Operator using python sdks for Azure we are checking if the files and folders exist for that particular day.
 There are total 5 tasks here.
+
 ![Airflow DAG: Copy Data from Source to Landing ](images/02_dag.png)
 
 <h4>Task 1: <b>Check folders and files </b></h4>
 This is a Python task which checks if the file is present for that particular folder and date in the source ADLS.
 To connect to Azure we are using stored environmental credentails: <i>AZURE_BLOB_CONN_STR</i> and <i>AZURE_CONTAINER_NAME</i>
-We are considering this pipeline to be dynamic where we pass on the <i>object_folder_name </i> and <i>date_folder_name</i>. If atleast one file exists then it outputs a json response and is stored on xcom with key <i>"return_value"</i> and value <i>"{'success': '1', 'error_message': None}"</i><br>. <br>
+We are considering this pipeline to be dynamic where we pass on the <i>object_folder_name </i> and <i>date_folder_name</i>. If atleast one file exists then it outputs a json response and is stored on xcom with key <i>"return_value"</i> and value <i>"{'success': '1', 'error_message': None}"</i>.<br>
 If there are no files in source it will change the  value as <i>"{'success': '0', 'error_message': 'The error received in the Pipeline run is as follows: Either the folder: 2023-06-26 does not exist at raw/employeedata/ Or there are no files at location: raw/employeedata/2023-06-26/'}"</i><br>
 Below screenshot is the task output showing files exist and success boolean as 1 stored in xcom.
+<br>
 
 ![Airflow DAG: Check_files_and_folders task output ](images/03_dag.png)
 
@@ -132,6 +136,8 @@ For Full refresh:<i> airflow.landing.view_stg_employee</i> <br>
 We have created a dbt model named: <i>dim_employees</i> which loads the incremental data using merge statement in final model named "dim_employees" which is present in database: <i>Analytics</i> and schema: <i>Analytics</i>
 
 There are total 3 tasks here. All of them are present under a taskgroup. We can logically group tasks together and call them a task group.
+<br>
+
 ![Airflow DAG: Run DBT Job ](images/05_dag.png)
 <h4>Task 1: <b>Check Job </b></h4>
 This used Python Operator which connects to DBT using hooks and checks if same job is currently running or not. If not then proceed with thye dag run. We don't want to run run the DBT job if same on is already running.
@@ -155,7 +161,8 @@ Once the dbt model is ran successfully we will log the details.
 
 Once all the tasks are ran we want to log the details. Alternatively details will be logged if pipeline fails due to some issue in the data i.e during checking files and folders,running adf pipeline, running dbt job. If task fails due to any other reason then we have configured slack notification for that.
 
-There are total 2 tasks here.
+There are total 2 tasks here. <br>
+
 ![Airflow DAG: Log Details ](images/06_dag.png)
 
 <h4>Task 1: <b>Process Log </b></h4>
@@ -169,7 +176,43 @@ Alternatively you can mention the connection credentials in
 From the previous task output it gets the details and sends an email notification to user.
 To connect to GMAIL server we are using stored environmental credentails:  <i>GMAIL_SMTP_SERVER </i> ,<i>GMAIL_SMTP_PORT </i> ,<i>GMAIL_USERNAME </i> ,<i>GMAIL_PASSWORD </i> and <i>EMAIL_TO_USER </i>.
 
+<br>
+The Insert Metadata task we had as the first step in workflow is used for logging details and is explained below.
+All of the Decision operators in python when fails goes to log details i.e. log details is a single component to which all of the fail task comvverge to. So this log details task needs to know which task it should refer to get the task faliures error message.
+<br>
+For this what we did is we created a python task called insert metadata which pushes two parameters into xcom: <br>
+1. decider_iterator : this is a variable whose value is initally 0. We are incrementing this variable value at every decider step<br>
+2. metadata : This is variable with json values added as metadata.<br>
+<br>
 
+![Airflow DAG: Explain logging mechanism ](images/07_dag.png)
+
+<br>
+
+Once that is done, if any task where issue is related to data fails, ex. the source files doesnot exist, then files exist decider will append the value of <i>decider_iterator</i> by 1 and now if it goes to log details, log details will get the <i>metadata</i> from xcom and get value where key equals value of <i>decider_iterator</i> in our case that will be <i> {"check_task": "check_folder_and_files"} </i>. From this dict we will get the value of <i>check_task</i> and use that as a task to get the output from. Similarly we will be doing it for other data related failures. 
+
+<br>
+
+But if incase there are failures in the pipeline due to issue/errors in functional programming, we are sending slack notification to user and defintion for that is added while defining the dag.This uses slack_webhook_conn_id='slack_conn'. We have created a connection named "slack_conn" in connections in airflow UI.
+<br> 
+Alternatively you can mention the connection credentials in 
+
+**[airflow_settings.yaml](/airflow_settings.yaml)**.
+
+<br>
+
+Email notification would something like mentioned below:
+
+![Notification: Email](images/01_notify.png)
+<br>
+Success or failure logs in the database would look something like this:
+
+
+![Notification: DB](images/02_notify.png)
+
+<br>
+
+I know there are lot of things which can be optimized here. Please let me know if you have some suggestions.
 
 
 
